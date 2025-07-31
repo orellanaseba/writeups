@@ -1,8 +1,9 @@
-Máquina Vulnversity - Tryhackme
+## Máquina Vulnversity - Tryhackme
 
-1. Reconocimiento
+### 1. Reconocimiento
 Comando Nmap para realizar escaneo de puertos:
 - nmap -sS -n -Pn -p- --open --min-rate 5000 <ip-address> -oN <filename>
+(./screenshots/recon)
 
 -sS: Stealth Scan para agilizar el escaneo
 -n: Evita el DNS.
@@ -61,12 +62,12 @@ Ahora nos dirigimos a la ruta /uploads para ver el archivo.
 4. Escalar privilegios.
 Nos ponemos en escucha con Netcat en nuestra máquina local en el puerto 443. Cuando hagamos click sobre el archivo, nos entablaremos una reverse shell con acceso al sistema objetivo.
 Una vez dentro del sistema, ejecutamos comandos de enumeración del sistema.
-- whoami:
-- id:
-- lsb_release -a:
-- cat /etc/passwd:
-- sudo -l:
-- find / -perm -4000 2>/dev/null
+- whoami: muestra el usuario actual
+- id: muestra los grupos a los que pertenece el usuario actual
+- lsb_release -a: información del sistema, kernel, etc.
+- cat /etc/passwd: usuarios y servicios del sistema
+- sudo -l: comandos que podemos ejecutar como root sin proporcionar contraseña
+- find / -perm -4000 2>/dev/null: busca por archivos SUID en el sistema.
 
 [/home] encontramos un usuario de nombre "bill". Dentro de este directorio, encontramos la flag -> 8bd7992fbe8a6ad22a63361004cfcedb
 

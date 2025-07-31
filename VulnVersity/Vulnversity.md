@@ -1,5 +1,10 @@
 ## Máquina Vulnversity - Tryhackme
 
+## Vulnerabilidades principales:
+* Subida de archivos insegura.
+* Abuso de extensión .phtml para ejecutar código PHP malicioso.
+* Escalada de privilegios utilizando el binario SUID systemctl
+
 ### 1. Reconocimiento
 Comando Nmap para realizar escaneo de puertos:
 - nmap -sS -n -Pn -p- --open --min-rate 5000 <ip-address> -oN <filename>
@@ -20,8 +25,8 @@ Comando Nmap para buscar versión y servicio que corren para dichos puertos:
 - nmap -sCV -p21,22,139,445,3128,3333 <ip-adress> -oN <filename>
 ![Scripts de reconocimiento con Nmap](./screenshots/recon2.png)
 
--sCV: Lanza los scripts más populares de reconocimiento y enumera las versiones de los servicios.
--p<ports>: Enumera los puertos encontrados.
+* -sCV: Lanza los scripts más populares de reconocimiento y enumera las versiones de los servicios.
+* -p<ports>: Enumera los puertos encontrados.
 
 [Evitar FTP y SMB] El script de reconocimiento no nos dice que podemos acceder a el servicio FTP ni tampoco a SMB, ya adelanto que no hay nada que podamos hacer con dichos servicios.
 [Visitar la web] Vamos a la web "http://<ip-address>:3333/

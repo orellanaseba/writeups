@@ -66,25 +66,33 @@ etc
 
 3. Explotación
 [Usamos Burpsuite] para agilizar el proceso y estar probando manualmente cada extensión, podemos usar la herramienta Intruder de Burpsuite para cargar una serie de extensiones que se irán probando, y la respuesta del servidor podemos deducir que esa extensión es válida.
+
 ![Burpsuite](./screenshots/exploit4.png)
 ![Burpsuite proxy](./screenshots/exploit5.png)
 Ahora enviamos la solicitud al servidor y la capturamos con Burpsuite
+
 ![Captura con Burpsuite](./screenshots/exploit6.png)
+![Ataque](./screenshots/exploit7.png)
+
 Lo mandamos al Intruder para realizar un ataque de tipo Sniper. Esto se utiliza para probar multiples combinaciones de palabras o caracteres.
 En este caso, lo utilizamos para probar múltiples extensiones php.
 [lanzamos el ataque]
 Dependiendo la longitud de la respuesta podemos determinar si es válida o no. Vemos que extensión ".phtml" tiene mayor longitud que las demás.
 Podemos cambiar la extensión y probar con .phtml para subir el script malicioso.
+
 ![Extension Sniper Attack](./screenshots/exploit8.png)
 ¡¡Exitoso!!
 ![Exitoso](./screenshots/exploit9.png)
+
 Ahora nos dirigimos a la ruta /uploads para ver el archivo.
 
 
 5. Escalar privilegios.
 Nos ponemos en escucha con Netcat en nuestra máquina local en el puerto 443. Cuando hagamos click sobre el archivo, nos entablaremos una reverse shell con acceso al sistema objetivo.
+
 ![Netcat](./screenshots/exploit10.png)
 ![Reverse shell](./screenshots/exploit11.png)
+
 Una vez dentro del sistema, ejecutamos comandos de enumeración del sistema.
 - whoami: muestra el usuario actual
 - id: muestra los grupos a los que pertenece el usuario actual
@@ -94,6 +102,7 @@ Una vez dentro del sistema, ejecutamos comandos de enumeración del sistema.
 - find / -perm -4000 2>/dev/null: busca por archivos SUID en el sistema.
 
 ![Acceso al sistema](./screenshots/privesc1.png)
+
 [/home] encontramos un usuario de nombre "bill". Dentro de este directorio, encontramos la flag -> 8bd7992fbe8a6ad22a63361004cfcedb
 
 Debemos enumerar los archivos SUID los cuales podemos aprovecharnos de ello.
@@ -124,16 +133,22 @@ Luego, concatena otro comando "chmod +s" para otorgarle permisos SUID a la bash 
 Luego, guarda todo este "echo" en /tmp/root.service
 
 Despues de hacer todo este payload.
+
 ![segundoc comando](./screenshots/privesc5.png)
+
 Ejecutamos: /bin/systemctl link /tmp/root.service
+
 ![tercer comando](./screenshots/privesc6.png)
+
 Una vez ejecutado, proseguimos con: /bin/systemctl enable --now /tmp/root.service
 
 Cuando ejecutemos este comando, ya tendremos copiada la bash en /tmp con permiso SUID.
+
 ![Vemos la shell en /tmp](./screenshots/privesc7.png)
 ![Vemos la shell en /tmp](./screenshots/privesc8.png)
 
 ![Obtenemos privilegios root](./screenshots/privesc9.png)
+
 Ejecutamos: /tmp/rootbash -p
 para tener una shell como usuario root
 whoami para verificar si somos root.

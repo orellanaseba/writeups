@@ -3,7 +3,7 @@
 ### 1. Reconocimiento
 Comando Nmap para realizar escaneo de puertos:
 - nmap -sS -n -Pn -p- --open --min-rate 5000 <ip-address> -oN <filename>
-(./screenshots/recon.png)
+![Escaneo Inicial](./screenshots/recon.png)
 
 -sS: Stealth Scan para agilizar el escaneo
 -n: Evita el DNS.

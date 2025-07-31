@@ -5,15 +5,15 @@ Comando Nmap para realizar escaneo de puertos:
 - nmap -sS -n -Pn -p- --open --min-rate 5000 <ip-address> -oN <filename>
 ![Escaneo Inicial](./screenshots/recon.png)
 
--sS: Stealth Scan para agilizar el escaneo
--n: Evita el DNS.
--Pn: Evita realizar el descubrimiento de host.
--p-: Busca en los 65535 puertos.
---open: Filtra solamente por puertos abiertos.
---min-rate 5000: Trazar 5000 paquetes por segundo.
-<ip-address>: IP objetivo.
--oN: Formato Nmap para guardar el output.
-<filename>: Nombre del output.
+* -sS: Stealth Scan para agilizar el escaneo
+* -n: Evita el DNS.
+* -Pn: Evita realizar el descubrimiento de host.
+* -p-: Busca en los 65535 puertos.
+* --open: Filtra solamente por puertos abiertos.
+* --min-rate 5000: Trazar 5000 paquetes por segundo.
+* <ip-address>: IP objetivo.
+* -oN: Formato Nmap para guardar el output.
+* <filename>: Nombre del output.
 
 Puertos encontrados: 21(FTP), 22(SSH), 139(SMB), 445(SMB), 3128(SQUID-PROXY), 3333(HTTP).
 Comando Nmap para buscar versión y servicio que corren para dichos puertos:
@@ -36,17 +36,17 @@ Utilizamos la herramienta Gobuster para hacer fuerza bruta en busqueda de direct
 Comando utilizado:
 gobuster dir -u http://10.201.64.246 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt --no-error -t 200
 ![Fuerza bruta en rutas de la web](./screenshots/recon4.png)
--u: URL objetivo.
--w: Diccionario empleado para el ataque de fuerza bruta.
---no-error: Para que no se muestren los errores en el output.
--t 200: Para lanzar peticiones con 200 hilos y agilizar el proceso.
+* -u: URL objetivo.
+* -w: Diccionario empleado para el ataque de fuerza bruta.
+* --no-error: Para que no se muestren los errores en el output.
+* -t 200: Para lanzar peticiones con 200 hilos y agilizar el proceso.
 
 Directorios encontrados:
-/images
-/css
-/js
-/fonts
-/internal -> Potencial
+* /images
+* /css
+* /js
+* /fonts
+* /internal -> Potencial
 
 [Visitamos /internal] Esta ruta permite la subida de archivos. Podemos intentar subir un código malicioso en php para ganar acceso al sistema.
 ![Ruta potencialmente vulnerable](./screenshots/recon5.png)
